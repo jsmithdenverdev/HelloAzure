@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using HelloAzure.BusinessLogic;
 
 namespace HelloAzure.Functions
 {
@@ -17,6 +18,7 @@ namespace HelloAzure.Functions
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
+            GreetingService greetingService = new GreetingService();
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string name = req.Query["name"];
@@ -25,9 +27,12 @@ namespace HelloAzure.Functions
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             name = name ?? data?.name;
 
-            return name != null
-                ? (ActionResult)new OkObjectResult($"Hello, {name}")
-                : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            if (name != null) {
+                string greeting = greetingService.GetGreeting(name);
+                return (ActionResult)new OkObjectResult(greeting);
+            }
+
+            return new BadRequestObjectResult("Please pass a name on the query string or in the request body");
         }
     }
 }
