@@ -12,7 +12,7 @@ steps:
   inputs:
     command: publish
     arguments: '--configuration Release --output publish_output'
-    projects: 'HelloAzure.Functions/HelloAzure.Functions.csproj'
+    projects: 'HelloAzure.Functions/HelloAzure_Functions.csproj'
     publishWebProjects: false
     modifyOutputPath: false
     zipAfterPublish: false
