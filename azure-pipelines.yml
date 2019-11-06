@@ -13,6 +13,7 @@ steps:
     command: publish
     arguments: '--configuration Release --output publish_output'
     projects: 'HelloAzure.Functions/HelloAzure.Functions.csproj'
+    publishWebProjects: false
     modifyOutputPath: false
     zipAfterPublish: false
 - task: ArchiveFiles@2
